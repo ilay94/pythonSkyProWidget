@@ -44,6 +44,6 @@ def test_get_mask_account_account_mask(unmask_account):
         (None, "Некорректный номер счета"),
     ],
 )
-def test_get_mask_card_number_card_number_incorrect(number_card, expected):
+def test_get_mask_account_account_incorrect(number_card, expected):
     # Проверка случаев некорректных номеров счетов
     assert get_mask_account(number_card) == expected
