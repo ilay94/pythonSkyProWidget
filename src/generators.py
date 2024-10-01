@@ -1,24 +1,33 @@
-def filter_by_currency(transaction: list, currency: str) -> iter:
+def filter_by_currency(transactions: list, currency: str) -> iter:
     """Создает итератор возвращающий только операции по указаной валюте"""
 
-    def get_currency(proces):
+    def get_currency(transaction):
         if (
-            "operationAmount" in proces
-            and "currency" in proces["operationAmount"]
-            and "code" in proces["operationAmount"]["currency"]
+            "operationAmount" in transaction
+            and "currency" in transaction["operationAmount"]
+            and "code" in transaction["operationAmount"]["currency"]
         ):
-            return proces["operationAmount"]["currency"]["code"] == currency
+            return transaction["operationAmount"]["currency"]["code"] == currency
         else:
             return False
 
-    if type(transaction) is not list:
+    if type(transactions) is not list:
         return iter([])
-    return filter(get_currency, transaction)
+    return filter(get_currency, transactions)
 
 
-def transaction_descriptions(transaction: list):
+def transaction_descriptions(transactions: list):
     """Создает генератор возвращающий описание каждой операции по очереди"""
-    pass
+    if type(transactions) is not list:
+        return iter([])
+
+    def get_description(transaction):
+        if "description" in transaction and type(transaction["description"]) is str:
+            return transaction["description"]
+        else:
+            return ""
+
+    return [get_description(transaction) for transaction in transactions]
 
 
 def card_number_generator(start: int, finish: int):
