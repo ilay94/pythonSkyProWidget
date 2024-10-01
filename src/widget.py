@@ -2,7 +2,7 @@ from src.mask import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_card: str) -> str:
-    """ "Функци маскировки номера карты или счета"""
+    """ "Функция маскировки номера карты или счета"""
     if type(account_card) is not str:
         return "Некорректный номер"
     account_card_split = account_card.rsplit(" ", 1)

@@ -1,5 +1,5 @@
 def filter_by_currency(transactions: list, currency: str) -> iter:
-    """Создает итератор возвращающий только операции по указаной валюте"""
+    """Создает итератор возвращающий только операции по указанной валюте"""
 
     def get_currency(transaction):
         if (
@@ -16,7 +16,7 @@ def filter_by_currency(transactions: list, currency: str) -> iter:
     return filter(get_currency, transactions)
 
 
-def transaction_descriptions(transactions: list):
+def transaction_descriptions(transactions: list) -> iter:
     """Создает генератор возвращающий описание каждой операции по очереди"""
     if type(transactions) is not list:
         return iter([])
@@ -30,7 +30,7 @@ def transaction_descriptions(transactions: list):
     return [get_description(transaction) for transaction in transactions]
 
 
-def card_number_generator(start: int, finish: int):
+def card_number_generator(start: int, finish: int) -> iter:
     """Генерирует последовательность номеров карт"""
 
     if type(start) is not int:
