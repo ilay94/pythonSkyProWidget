@@ -32,4 +32,15 @@ def transaction_descriptions(transactions: list):
 
 def card_number_generator(start: int, finish: int):
     """Генерирует последовательность номеров карт"""
-    pass
+
+    if type(start) is not int:
+        return
+    if type(finish) is not int:
+        finish = start
+    while start <= finish:
+        path_1 = start % 10000
+        part_2 = (start // 10000) % 10000
+        part_3 = (start // 100000000) % 10000
+        part_4 = start // 1000000000000
+        yield f"{part_4:04d} {part_3:04d} {part_2:04d} {path_1:04d}"
+        start += 1
