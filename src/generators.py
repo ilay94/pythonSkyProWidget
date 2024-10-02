@@ -21,23 +21,21 @@ def transaction_descriptions(transactions: list) -> iter:
     if type(transactions) is not list:
         return iter([])
 
-    def get_description(transaction):
+    for transaction in transactions:
         if "description" in transaction and type(transaction["description"]) is str:
-            return transaction["description"]
+            yield transaction["description"]
         else:
-            return ""
-
-    return [get_description(transaction) for transaction in transactions]
+            yield ""
 
 
-def card_number_generator(start: int, finish: int) -> iter:
+def card_number_generator(start: int, stop: int) -> iter:
     """Генерирует последовательность номеров карт"""
 
     if type(start) is not int:
         return
-    if type(finish) is not int:
-        finish = start
-    while start <= finish:
+    if type(stop) is not int:
+        stop = start
+    while start <= stop:
         path_1 = start % 10000
         part_2 = (start // 10000) % 10000
         part_3 = (start // 100000000) % 10000
