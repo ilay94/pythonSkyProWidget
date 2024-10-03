@@ -3,38 +3,31 @@ from functools import wraps
 
 
 def log(filename: str = ""):
-    """Декторар позволяющий логировать начало и конец выполнения функции, а также ее результаты или возникшие ошибки"""
+    """Декторар позволяющий логировать выполнения функции, ее завершение или возникшие ошибки"""
 
-    def write_file(write_filename: str):
-        file = open(write_filename, "a")
+    def get_file_writer(write_filename: str):
+        file = open(write_filename, "a", encoding="utf-8")
 
-        def write_inner(string: str):
-            file.write(string + "\n")
+        def write_to_file(text):
+            file.write(text + "\n")
 
-        yield write_inner
-
-        yield file.close()
+        return write_to_file
 
     write_func = print
-    gen_write_file = write_file(filename)
     if filename != "":
-        write_func = next(gen_write_file)
+        write_func = get_file_writer(filename)
 
     def log_inner(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            write_func(
-                f"""{datetime.datetime.now().time()}, Вызов функции {func.__name__} - {func.__doc__}, переданные параметры {args}, {kwargs}"""
-            )
             try:
                 result = func(*args, **kwargs)
-                write_func(f"{datetime.datetime.now().time()}, Функция вернула {result}")
+                write_func(f"{func.__name__} ok")
                 return result
             except Exception as err:
-                write_func(f"{datetime.datetime.now().time()}, Ошибка выполнения функции: {err}")
-            finally:
-                write_func(f"{datetime.datetime.now().time()}, Завершение функции: {func.__name__}")
-                next(gen_write_file)
+                write_func(f"{func.__name__} error: {err}. Inputs: {args}, {kwargs}")
+                raise err
+
         return wrapper
 
     return log_inner
