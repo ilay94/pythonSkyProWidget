@@ -1,9 +1,8 @@
-import datetime
 from functools import wraps
 
 
 def log(filename: str = ""):
-    """Декторар позволяющий логировать выполнения функции, ее завершение или возникшие ошибки"""
+    """Декоратор позволяющий логировать выполнения функции, ее завершение или возникшие ошибки"""
 
     def get_file_writer(write_filename: str):
         file = open(write_filename, "a", encoding="utf-8")
