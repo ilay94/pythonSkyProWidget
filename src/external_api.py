@@ -15,7 +15,6 @@ def convert_to_RUB(amount: str, code: str) -> float:
 
     if type(amount) is str and amount.isdigit() and code in ["USD", "EUR"]:
 
-
         url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={code}&amount={amount}"
 
         headers = {"apikey": api_key}

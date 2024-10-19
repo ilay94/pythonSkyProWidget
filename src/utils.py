@@ -8,11 +8,11 @@ def read_json_from_file(filepatch: str) -> list:
     try:
         with open(filepatch, encoding="utf-8") as f:
             operations = json.load(f)
-            if type(operations) == list:
+            if isinstance(operations, list):
                 return operations
             else:
                 return []
-    except Exception as e:
+    except Exception:
         return []
 
 
