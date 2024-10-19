@@ -1,7 +1,8 @@
-import pytest
 from unittest.mock import patch
 
-from src.utils import read_json_from_file, get_amount_rub
+import pytest
+
+from src.utils import get_amount_rub, read_json_from_file
 
 
 def test_read_json_from_file_correct(first_correct_list_operations):
