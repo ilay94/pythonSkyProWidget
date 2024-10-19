@@ -12,13 +12,16 @@ def read_json_from_file(filepatch: str) -> list:
                 return operations
             else:
                 return []
-    except:
+    except Exception as e:
         return []
 
 
 def get_amount_rub(operation: dict) -> float:
-    """Функция получения суммы проведенной операции"""
+    """Функция получения суммы проведенной операции в рублях"""
     if operation["operationAmount"]["currency"]["code"] != "RUB":
-        return convert_to_RUB(operation["operationAmount"]["amount"], operation["operationAmount"]["currency"]["code"])
+        return convert_to_RUB(
+            operation["operationAmount"]["amount"],
+            operation["operationAmount"]["currency"]["code"],
+        )
     else:
         return float(operation["operationAmount"]["amount"])
