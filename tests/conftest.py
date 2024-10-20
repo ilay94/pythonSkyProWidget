@@ -325,6 +325,7 @@ def first_correct_list_operations():
         "to": "Счет 64686473678894779589",
     }
 
+
 @pytest.fixture
 def operations_havent_currency():
     return {
@@ -338,6 +339,7 @@ def operations_havent_currency():
         "from": "Maestro 1596837868705199",
         "to": "Счет 64686473678894779589",
     }
+
 
 @pytest.fixture
 def operation_correct():
