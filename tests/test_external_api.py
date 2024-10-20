@@ -31,9 +31,7 @@ def test_convert_to_RUB_correct(mock_convert_to_RUB, api_key):
     ],
 )
 @patch("requests.get")
-def test_convert_to_RUB_incorrect_param(
-    mock_convert_to_RUB, amount, code, result, api_key
-):
+def test_convert_to_RUB_incorrect_param(mock_convert_to_RUB, amount, code, result, api_key):
     mock_convert_to_RUB.return_value.status_code = 200
     mock_convert_to_RUB.return_value.text = '{"result": 1000.0}'
     assert convert_to_RUB(amount, code) == result
@@ -44,9 +42,7 @@ def test_convert_to_RUB_incorrect_param(
     [100, 300, 400, 500],
 )
 @patch("requests.get")
-def test_convert_to_RUB_incorrect_status_code(
-    mock_convert_to_RUB, status_code, api_key, capsys
-):
+def test_convert_to_RUB_incorrect_status_code(mock_convert_to_RUB, status_code, api_key, capsys):
     mock_convert_to_RUB.return_value.status_code = status_code
     mock_convert_to_RUB.return_value.reason = status_code
 
