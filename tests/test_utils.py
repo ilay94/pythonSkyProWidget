@@ -26,6 +26,8 @@ def test_read_json_from_file_incorrect_file(file_patch, result):
 def test_get_amount_rub_correct_from_rub(first_correct_list_operations):
     assert get_amount_rub(first_correct_list_operations) == 31957.58
 
+def test_get_amount_rub_incorrect_operation(operations_havent_currency):
+    assert get_amount_rub(operations_havent_currency) == None
 
 @patch("requests.get")
 def test_get_amount_rub_correct_from_usd(
