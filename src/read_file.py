@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def get_process_from_csv(filepatch: str) -> list:
-    """Функицмя чтения csv файла, и получения списка операций"""
+    """Функиция чтения csv файла, и получения списка операций"""
     try:
         csv_frame = pd.read_csv(filepatch, sep=";", header=0)
         return dataFrame_to_process(csv_frame)
@@ -11,7 +11,7 @@ def get_process_from_csv(filepatch: str) -> list:
 
 
 def get_process_from_excel(filepatch: str) -> list:
-    """Функицмя чтения excel файла, и получения списка операций"""
+    """Функиция чтения excel файла, и получения списка операций"""
     try:
         excel_frame = pd.read_excel(filepatch, header=0)
         return dataFrame_to_process(excel_frame)

@@ -81,6 +81,14 @@ pytest --cov=src --cov-report=html
 ```convert_to_RUB(amount: str, code: str) -> float:```
 Функция конвертации суммы проведенной операции в рубли по актуальному курсу
 
+### Модуль read_file предоставляет следующий набор функций:
+
+```def get_process_from_csv(filepatch: str) -> list:```
+Функиция чтения csv файла, и получения списка операций
+
+```get_process_from_excel(filepatch: str) -> list:```
+Функиция чтения excel файла, и получения списка операций
+
 ## Документация:
 
 Описание доступных функций представлена в виде Docstrings 
