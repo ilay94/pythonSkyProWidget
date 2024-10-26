@@ -358,3 +358,16 @@ def operation_correct():
 def api_key():
     load_dotenv()
     return os.getenv("API_KEY")
+
+
+@pytest.fixture
+def correct_list_single_operations():
+    return {
+        "date": "2023-09-05T11:30:32Z",
+        "description": "Перевод организации",
+        "from": "Счет 58803664561298323391",
+        "id": 650703.0,
+        "operationAmount": {"amount": 16210.0, "currency": {"code": "PEN", "name": "Sol"}},
+        "state": "EXECUTED",
+        "to": "Счет 39745660563456619397",
+    }

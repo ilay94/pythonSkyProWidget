@@ -1,3 +1,4 @@
+import os
 from unittest.mock import patch
 
 import pytest
@@ -6,7 +7,7 @@ from src.utils import get_amount_rub, read_json_from_file
 
 
 def test_read_json_from_file_correct(first_correct_list_operations):
-    result = read_json_from_file("tests/data/operations_correct.json")
+    result = read_json_from_file(os.path.join(os.path.dirname(__file__), "data/operations_correct.json"))
     assert result[0] == first_correct_list_operations
 
 

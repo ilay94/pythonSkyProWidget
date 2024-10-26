@@ -1,12 +1,15 @@
 import json
 import logging
+import os
 
 from src.external_api import convert_to_RUB
 
 # Настройка логера
 logger = logging.getLogger("utils_log")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("../logs/utils_log.log", mode="w", encoding="utf-8")
+file_handler = logging.FileHandler(
+    os.path.join(os.path.dirname(__file__), "../logs/utils_log.log"), mode="w", encoding="utf-8"
+)
 file_formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
