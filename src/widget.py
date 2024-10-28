@@ -1,5 +1,5 @@
 from src.mask import get_mask_account, get_mask_card_number
-
+from datetime import datetime
 
 def mask_account_card(account_card: str) -> str:
     """ "Функция маскировки номера карты или счета"""
@@ -24,18 +24,17 @@ def mask_account_card(account_card: str) -> str:
 
 def get_date(date_time: str) -> str:
     """ "Функция форматирования даты к ДД.ММ.ГГГГ"""
-    if type(date_time) is not str or len(date_time) not in [19, 26]:
+    if type(date_time) is not str:
         return "Некорректная дата"
-    date = date_time[:10].split("-")
-    if not (len(date[2]) == 2 and len(date[1]) == 2 and len(date[0]) == 4 and "".join(date).isdigit()):
+    try:
+        if date_time.endswith('Z'):
+            date_object = datetime.strptime(date_time, "%Y-%m-%dT%H:%M:%S")
+        else:
+            date_object = datetime.strptime(date_time, "%Y-%m-%dT%H:%M:%S.%f")
+        formatted_date = date_object.strftime("%d.%m.%Y")
+    except:
         return "Некорректная дата"
-    count_date_in_mount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    int_year = int(date[0])
-    int_month = int(date[1])
-    int_day = int(date[2])
-    leap_year_mount_2 = 0
-    if int_year % 4 == 0 and int_month == 2:
-        leap_year_mount_2 = 1
-    if not (1 <= int_month <= 12 and 1 <= int_day <= (count_date_in_mount[int_month - 1] + leap_year_mount_2)):
-        return "Некорректная дата"
-    return f"{date[2]}.{date[1]}.{date[0]}"
+
+
+
+    return formatted_date
