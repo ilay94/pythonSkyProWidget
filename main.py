@@ -1,11 +1,15 @@
-from src.processing import filter_by_description, filter_by_state, sort_by_date
+import os
+
+from src.processing import filter_by_description, filter_by_state, sort_by_date, filter_by_currency
 from src.read_file import get_process_from_csv, get_process_from_excel
 from src.utils import read_json_from_file
 from src.widget import get_date, mask_account_card
+
+
 def main():
     print(
         """Привет! Добро пожаловать в программу работы 
-    с банковскими транзакциями. """
+с банковскими транзакциями. """
     )
 
     operations = []
@@ -17,16 +21,18 @@ def main():
     3. Получить информацию о транзакциях из XLSX-файла"""
         )
         choice = input()
-        if choice in ["1", "2", "2"]:
+        if choice in ["1", "2", "3"]:
             match choice:
                 case "1":
-                    operations = read_json_from_file("data/operations.json")
+                    operations = read_json_from_file(os.path.join(os.path.dirname(__file__), "data/operations.json"))
                 case "2":
                     print("Для обработки выбран CSV-файл.")
-                    operations = get_process_from_csv("data/transactions.csv")
+                    operations = get_process_from_csv(os.path.join(os.path.dirname(__file__), "data/transactions.csv"))
                 case "3":
                     print("Для обработки выбран XLSX-файл.")
-                    operations = get_process_from_excel("data/transactions_excel.xlsx")
+                    operations = get_process_from_excel(
+                        os.path.join(os.path.dirname(__file__), "data/transactions_excel.xlsx")
+                    )
             break
         else:
             print("Выбран неверный формат файла")
@@ -36,7 +42,7 @@ def main():
     while True:
         print(
             """Введите статус, по которому необходимо выполнить фильтрацию. 
-    Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"""
+Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING"""
         )
         state = input().upper()
         if state in ["EXECUTED", "CANCELED", "PENDING"]:
@@ -60,24 +66,31 @@ def main():
                     filtered_processing = sort_by_date(filtered_processing, False)
                     break
                 case _:
-                    print(f"Выбрано неверное направление сортировки {order}, сортировка не произведенна")
+                    print(f'Направление сортировки "{order}" недоступно')
         elif sort_date == "НЕТ":
             break
 
     print("Выводить только рублевые транзакции? Да/Нет: ")
-    rub_transaction = input().upper()
-    if rub_transaction == "ДА":
-        filtered_processing = [t for t in filtered_processing if t["currency"] == "RUB"]
-
+    while True:
+        rub_transaction = input().upper()
+        if rub_transaction == "ДА":
+            filtered_processing = filter_by_currency(filtered_processing)
+            break
+        elif rub_transaction == "НЕТ":
+            break
 
     print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ")
-    filter_desc = input().upper()
-    if filter_desc == "ДА":
-        word = input("Введите слово для фильтрации: ")
-        filtered_processing = filter_by_description(filtered_processing, word)
+    while True:
+        filter_desc = input().upper()
+        if filter_desc == "ДА":
+            word = input("Введите слово для фильтрации: ")
+            filtered_processing = filter_by_description(filtered_processing, word)
+            break
+        elif filter_desc == "НЕТ":
+            break
 
     print("Распечатываю итоговый список транзакций...")
-    if len(filtered_processing) < 0:
+    if len(filtered_processing) == 0:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     else:
         print(f"Всего банковских операций в выборке: {len(filtered_processing)}")

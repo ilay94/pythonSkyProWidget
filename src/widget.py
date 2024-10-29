@@ -1,6 +1,7 @@
 from src.mask import get_mask_account, get_mask_card_number
 from datetime import datetime
 
+
 def mask_account_card(account_card: str) -> str:
     """ "Функция маскировки номера карты или счета"""
     if type(account_card) is not str:
@@ -27,14 +28,12 @@ def get_date(date_time: str) -> str:
     if type(date_time) is not str:
         return "Некорректная дата"
     try:
-        if date_time.endswith('Z'):
+        if date_time.endswith("Z"):
             date_object = datetime.strptime(date_time, "%Y-%m-%dT%H:%M:%S")
         else:
             date_object = datetime.strptime(date_time, "%Y-%m-%dT%H:%M:%S.%f")
         formatted_date = date_object.strftime("%d.%m.%Y")
     except:
         return "Некорректная дата"
-
-
 
     return formatted_date
