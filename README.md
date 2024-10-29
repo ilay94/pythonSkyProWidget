@@ -53,6 +53,15 @@ pytest --cov=src --cov-report=html
 ```def sort_by_date(process: list, order_reverse: bool = True) -> list:```
 Функция для сортировки списка операций по дате исполнения
 
+```def filter_by_description(process: list, search_str: str) -> list:```
+Функция поиска операций по заданой строке
+
+```def filter_by_currency(process: list, currency: str = "RUB") -> list:```
+Функция для фильтрации списка операций по валюте
+
+```def get_count_process_by_descriptions(process: list, descriptions: list = []) -> dict:```
+Функция подсчета количетва операций с определенным типом
+
 ### Модуль generators предоставляет следующий набор функций:
 
 ```filter_by_currency(transactions: list, currency: str) -> iter:```

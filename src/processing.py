@@ -32,7 +32,7 @@ def filter_by_description(process: list, search_str: str) -> list:
     """Функция поиска операций по заданой строке"""
     pattern = re.compile(search_str, re.IGNORECASE)
 
-    return list(filter(lambda proces: pattern.search(proces["description"]), process))
+    return list(filter(lambda proces: pattern.search(proces.get("description")), process))
 
 
 def filter_by_currency(process: list, currency: str = "RUB") -> list:
@@ -46,7 +46,7 @@ def filter_by_currency(process: list, currency: str = "RUB") -> list:
 
 def get_count_process_by_descriptions(process: list, descriptions: list = []) -> dict:
     """Функция подсчета количетва операций с определенным типом"""
-    counted = Counter([proces["description"] for proces in process])
+    counted = Counter([proces.get("description") for proces in process])
     if type(descriptions) is list and len(descriptions) > 0:
         return {word: count for word, count in counted.items() if word in descriptions}
     else:
