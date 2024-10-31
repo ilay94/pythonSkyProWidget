@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, sort_by_date, filter_by_currency, get_count_process_by_descriptions
 
 
 def test_filter_by_state_correct_executed(correct_list_process, correct_list_process_state_executed):
@@ -45,3 +45,32 @@ def test_sort_by_date_without_date(list_process_without_date):
 
 def test_sort_by_date_equal_date(list_process_equal_date, sorted_list_process_equal_date):
     assert sort_by_date(list_process_equal_date) == sorted_list_process_equal_date
+
+
+def test_filter_by_currency_correct(correct_list_transactions, correct_list_process_rub):
+    assert filter_by_currency(correct_list_transactions) == correct_list_process_rub
+
+
+@pytest.mark.parametrize(
+    "currency, expected",
+    [("START", []), ("", []), ([], []), (None, [])],
+)
+def test_filter_by_currency_different_currency(correct_list_transactions, currency, expected):
+    assert filter_by_currency(correct_list_transactions, currency) == expected
+
+
+def test_get_count_process_by_descriptions_correct(correct_list_transactions, correct_list_transactions_count):
+    assert get_count_process_by_descriptions(correct_list_transactions) == correct_list_transactions_count
+
+
+@pytest.mark.parametrize(
+    "descriptions, expected",
+    [
+        (["Перевод организации"], {"Перевод организации": 2}),
+        (["бубугага"], {}),
+        ([], {"Перевод организации": 2, "Перевод с карты на карту": 1, "Перевод со счета на счет": 2}),
+        (None, {"Перевод организации": 2, "Перевод с карты на карту": 1, "Перевод со счета на счет": 2}),
+    ],
+)
+def test_get_count_process_by_descriptions_different_descriptions(correct_list_transactions, descriptions, expected):
+    assert get_count_process_by_descriptions(correct_list_transactions, descriptions) == expected
